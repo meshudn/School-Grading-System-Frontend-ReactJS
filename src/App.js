@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Navbar from "./components/navbar";
+import Homepage from "./components/homepage";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+
+    constructor() {
+        super();
+    }
+
+    render() {
+        return (
+            <Router>
+                <div className="main_body">
+                    <Switch>
+                        <Route path="/" exact component={LoginPage} />
+                    </Switch>
+                    <div className="footer-container">
+                        <div className="footer container text-center">
+                            <p>&copy; Developed by Meshu Deb Nath and Nafisa Islam.</p>
+                        </div>
+                    </div>
+                </div>
+            </Router>
+        );
+    }
 }
 
 export default App;

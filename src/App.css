@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'lobster';
+  src: local('lobster'), url("./components/Lobster-Regular.ttf") format('ttf');
+}
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.navbar_text{
+  margin-left: 15px;
+}
+.navbar_title{
+  font-family: 'Lobster', cursive;
+  font-size: 18px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
