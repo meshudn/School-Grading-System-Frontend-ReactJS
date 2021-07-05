@@ -2,7 +2,6 @@ import React from "react";
 import {Link} from "react-router-dom";
 import '../App.css';
 
-
 class Navbar extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +21,7 @@ class Navbar extends React.Component {
                         <nav className="navbar navbar-expand-lg navbar-light">
                             <div className="container">
                                 <a className="navbar-brand navbar_text" href="#"><img width={30} src="elearning.png"
-                                                                                      alt=""/> <span
+                                                                                      alt=""/><span
                                     className="navbar_title">School Grading System</span></a>
                                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

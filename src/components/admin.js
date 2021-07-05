@@ -6,6 +6,8 @@ import '../App.css';
 import './admin-stylesheets.css'
 import axios from 'axios';
 import Navbar from "./navbar";
+import AdminEditUser from "./adminEditUser";
+import {Link} from "react-router-dom";
 
 class AdminPage extends React.Component {
     constructor() {
@@ -53,8 +55,8 @@ class AdminPage extends React.Component {
                         <td className="text-capitalize">{index.role}</td>
                         <td><span className="status text-success">&bull;</span> {status}</td>
                         <td className="action-button">
-                            <a href="#" className="settings" title="Settings" data-toggle="tooltip"><img src="./setting.png" width="20" /></a>
-                            | <a href="#" className="delete" title="Delete" data-toggle="tooltip"><img src="./delete.png" width="20" /></a>
+                            <Link to={{pathname: '/add-user', userid: index.userid, username: index.username, password: index.password, firstName: index.firstName, lastName: index.lastName, archived: index.archived, role: index.role }} className="settings" ><img src="./setting.png" width="20" /></Link>
+                            | <a href="#" className="delete" ><img src="./delete.png" width="20" /></a>
                         </td>
                     </tr>
                 );

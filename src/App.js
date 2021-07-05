@@ -8,14 +8,13 @@ import {
     Route
 } from "react-router-dom";
 import axios from "axios";
+import AdminEditUser from "./components/adminEditUser";
 
 
 class App extends React.Component {
-
     constructor() {
         super();
     }
-
     render() {
         return (
             <Router>
@@ -23,6 +22,7 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/" exact component={LoginPage}/>
                         <Route path="/admin" exact component={AdminPage}/>
+                        <Route path="/add-user" exact component={AdminEditUser}/>
                     </Switch>
                     <div className="footer-container">
                         <div className="footer container text-center">

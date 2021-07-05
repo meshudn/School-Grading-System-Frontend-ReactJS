@@ -98,3 +98,21 @@
   text-decoration: none;
 }
 
+.editform{
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}
+.editform h3{
+  margin-top: 30px;
+  background: #2ab3ff;
+  color: #fff;
+  padding: 16px 30px;
+  border-radius: 3px 3px 0 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+.editform select{
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
