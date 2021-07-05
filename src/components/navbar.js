@@ -9,11 +9,17 @@ class Navbar extends React.Component {
     }
 
     render() {
+        let navMenuLinkHTML = [];
+        for(let i=0;i<this.props.navMenu.length; i++){
+           navMenuLinkHTML.push( <li className="nav-item" key={"s"+i}>
+               <Link className="nav-link" to={"/"+this.props.navMenuLink[i]}>{this.props.navMenu[i]}</Link>
+           </li>);
+        }
         return (
             <header className="navbar-header">
                 <div className="">
                     <div className="">
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <nav className="navbar navbar-expand-lg navbar-light">
                             <div className="container">
                                 <a className="navbar-brand navbar_text" href="#"><img width={30} src="elearning.png"
                                                                                       alt=""/> <span
@@ -25,19 +31,8 @@ class Navbar extends React.Component {
                                 </button>
 
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                                    <ul className="navbar-nav ml-auto">
-
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="/">Home</Link>
-                                        </li>
-
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="/order">My Order</Link>
-                                        </li>
-
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to="/carts">Carts</Link>
-                                        </li>
+                                    <ul className="navbar-nav mr-auto">
+                                        {navMenuLinkHTML}
                                     </ul>
                                 </div>
                             </div>

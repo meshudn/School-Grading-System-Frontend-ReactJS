@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Lato', sans-serif;
 }
 
 .App-logo {
@@ -41,7 +42,7 @@
   font-family: 'lobster';
   src: local('lobster'), url("./components/Lobster-Regular.ttf") format('ttf');
 }
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lobster&display=swap');
 
 .navbar_text{
   margin-left: 15px;
@@ -51,4 +52,49 @@
   font-size: 18px;
   margin-top: 5px;
   margin-left: 5px;
+  color: #fff;
 }
+.loginpage{
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+  margin-top: 60px;
+}
+.form-signin label{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.form-signin button {
+  margin-bottom: 40px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.form-signin a{
+  text-decoration: none;
+}
+.form-signin a > span {
+  padding-left: 10px;
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+}
+.form-signin input{
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+.navbar{
+  background: #1875c5 !important;
+}
+.navbar .navbar-nav .nav-item .nav-link{
+  color: #fff;
+  text-decoration: none;
+}
+

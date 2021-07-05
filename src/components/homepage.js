@@ -7,7 +7,6 @@ import '../App.css';
 import axios from 'axios';
 
 class Homepage extends React.Component {
-
     constructor() {
         super();
     }
@@ -16,7 +15,6 @@ class Homepage extends React.Component {
             .then(response => {
                 const products = response.data;
                 console.log(JSON.stringify(products));
-
             });
     }
     render() {

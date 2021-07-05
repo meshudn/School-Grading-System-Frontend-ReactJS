@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import Navbar from "./components/navbar";
-import Homepage from "./components/homepage";
+import LoginPage from "./components/login";
+import AdminPage from "./components/admin";
 import {
     BrowserRouter as Router,
     Switch,
     Route
 } from "react-router-dom";
+import axios from "axios";
 
 
 class App extends React.Component {
@@ -20,7 +21,8 @@ class App extends React.Component {
             <Router>
                 <div className="main_body">
                     <Switch>
-                        <Route path="/" exact component={LoginPage} />
+                        <Route path="/" exact component={LoginPage}/>
+                        <Route path="/admin" exact component={AdminPage}/>
                     </Switch>
                     <div className="footer-container">
                         <div className="footer container text-center">
