@@ -24,6 +24,7 @@ class AdminPage extends React.Component {
         this.handleDeleteUser = this.handleDeleteUser.bind(this);
         this.handleDeleteClass = this.handleDeleteClass.bind(this);
         this.handleDeleteSubjects = this.handleDeleteSubjects.bind(this);
+        this.handleSubjectArchiving = this.handleSubjectArchiving.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -68,7 +69,7 @@ class AdminPage extends React.Component {
         axios.get("http://localhost:3000/api/v1/users")
             .then(response => {
                 const users = response.data;
-                console.log(JSON.stringify(users));
+                //console.log(JSON.stringify(users));
                 //console.log(products[1].product_id);
                 this.setState({
                     users: users
@@ -77,7 +78,7 @@ class AdminPage extends React.Component {
         axios.get("http://localhost:3000/api/v1/classes")
             .then(response => {
                 const classes = response.data;
-                console.log(JSON.stringify(classes));
+                //console.log(JSON.stringify(classes));
                 //console.log(products[1].product_id);
                 this.setState({
                     classes: classes
@@ -187,6 +188,52 @@ class AdminPage extends React.Component {
         });
 
     }
+    /*
+    * handle Subject Archiving event here
+    * */
+    handleSubjectArchiving(e, index) {
+        e.preventDefault();
+        /*
+        * checking weather the teacher has atleast one subjects.
+        * */
+        let myComponent = this;
+        let data = {
+            classId: index.classId,
+            subjectName: index.subjectName,
+            teacherId: index.teacherId,
+            teacherName: index.teacherName,
+            className: index.className,
+            archived: "true"
+        };
+        console.log(data);
+        axios.get("http://localhost:3000/api/v1/tests/search?subjectId=" + index.subjectId)
+            .then(response => {
+                if (response.status === 200) {
+                    /*subject with only dependent tests can be archived*/
+                    myComponent.setState({ newSubject: true });
+                    axios.put("http://localhost:3000/api/v1/subjects/" + index.subjectId, data)
+                        .then(function (response) {
+                            console.log(response);
+                            if(response.status === 200){
+                                axios.put("http://localhost:3000/api/v1/tests/archived/id?subjectId=" + index.subjectId, data)
+                                    .then(function (response) {
+                                        console.log(response);
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    });
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            }).catch(function (error) {
+            console.log(error);
+        });
+
+    }
+
     render() {
         const navMenu = ['Admin View', 'Log-out'];
         const navMenuLink = ['admin', ''];
@@ -273,13 +320,16 @@ class AdminPage extends React.Component {
             let subjectCount = 0;
             tempSubject.map(function (index) {
                 subjectCount++;
-                let status = "";
-                if (index.archived == "false") {
+                let status = "", ArchivedButton;
+                if (index.archived === "false") {
                     status = "Active";
+                    ArchivedButton = <a href="#" key={count + 2} onClick={(e) => myComponent.handleSubjectArchiving(e, index)}
+                                                className="delete">Archive!</a>;
                 } else {
-                    status = "Inactive";
+                    status = "Archived";
                 }
                 let tempSubjectId = index.subjectId;
+                console.log(index);
                 return subjectList.push(
                     <tr>
                         <td>{subjectCount}</td>
@@ -291,13 +341,17 @@ class AdminPage extends React.Component {
                             <Link to={{
                                 pathname: '/edit-subject',
                                 subjectId: index.subjectId,
+                                subjectName: index.subjectName,
                                 classId: index.classId,
+                                className: index.className,
                                 teacherName: index.teacherName,
                                 teacherId: index.teacherId,
                                 archived: index.archived
                             }} className="settings"><img src="./setting.png" width="20"/></Link>
                             | <a href="#" key={count + 1} onClick={(e) => myComponent.handleDeleteSubjects(e, index)}
                                  className="delete"><img src="./delete.png" width="20"/></a>
+                            {ArchivedButton}
+
                         </td>
                     </tr>
                 );
