@@ -12,6 +12,16 @@ class LoginPage extends React.Component {
             rememberMe: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
     }
 
     /*
@@ -19,10 +29,6 @@ class LoginPage extends React.Component {
     * */
     handleSubmit(event) {
         event.preventDefault();
-        this.setState({
-            username: event.target.username.value,
-            password: event.target.password.value
-        });
         const data = {
             username: this.state.username,
             password: this.state.password
@@ -32,15 +38,15 @@ class LoginPage extends React.Component {
                 'Content-Type': 'application/json'
             }
         };
-        axios.post('http://localhost:3000/api/v1/users/login', data, config)
+        axios.post('http://localhost:3000/api/v1/users/login', data)
             .then(response => {
                 if (response.status === 200) {
                     if (response.data === "admin") {
                         this.props.history.push('/admin');
                     } else if (response.data === "teacher") {
-
+                        this.props.history.push('/teacher');
                     } else if (response.data === "student") {
-
+                        this.props.history.push('/student');
                     }
                 }
             }).catch(error => {
@@ -58,10 +64,10 @@ class LoginPage extends React.Component {
                         <h1 className="h3 mb-3">Please sign in</h1>
                         <label htmlFor="inputEmail" className="sr-only">Username</label>
                         <input type="text" name="username" className="form-control" placeholder="Username"
-                               required autoFocus/>
+                               required autoFocus value={this.state.username} onChange={this.handleInputChange}/>
                         <label htmlFor="inputPassword" className="sr-only">Password</label>
-                        <input type="password" name="password" id="inputPassword" className="form-control"
-                               placeholder="Password"
+                        <input type="password" name="password" value={this.state.password} id="inputPassword" className="form-control"
+                               placeholder="Password" onChange={this.handleInputChange}
                                required/>
                         <div className="checkbox mb-3">
                             <label>

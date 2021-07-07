@@ -15,6 +15,10 @@ import AssignStudent from "./components/assignStudent";
 import DeassignStudent from "./components/deassignStudent";
 import AddSubject from "./components/addSubject";
 import EditSubject from "./components/editSubject";
+import TeacherView from "./components/teacher/teacher";
+import Tests from "./components/teacher/tests";
+import AddTest from "./components/teacher/addTest";
+import AddGrade from "./components/teacher/addGrade";
 
 
 class App extends React.Component {
@@ -28,6 +32,8 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/" exact component={LoginPage}/>
                         <Route path="/admin" exact component={AdminPage}/>
+                        <Route path="/teacher" exact component={TeacherView}/>
+                        <Route path="/student" exact component={AdminPage}/>
                         <Route path="/add-user" exact component={AddNewUser}/>
                         <Route path="/edit-user" exact component={AdminEditUser}/>
                         <Route path="/add-class" exact component={AddNewClass}/>
@@ -35,6 +41,11 @@ class App extends React.Component {
                         <Route path="/deassign-student" exact component={DeassignStudent}/>
                         <Route path="/add-subject" exact component={AddSubject}/>
                         <Route path="/edit-subject" exact component={EditSubject}/>
+
+                        {/*teacher view */}
+                        <Route path="/tests" exact component={Tests}/>
+                        <Route path="/add-test" exact component={AddTest}/>
+                        <Route path="/add-grade" exact component={AddGrade}/>
                     </Switch>
                     <div className="footer-container">
                         <div className="footer container text-center">
