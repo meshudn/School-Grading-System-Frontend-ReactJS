@@ -9,6 +9,9 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 import AdminEditUser from "./components/adminEditUser";
+import AddNewUser from "./components/addNewUser";
+import AddNewClass from "./components/addNewClass";
+import AssignStudent from "./components/assignStudent";
 
 
 class App extends React.Component {
@@ -22,7 +25,10 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/" exact component={LoginPage}/>
                         <Route path="/admin" exact component={AdminPage}/>
-                        <Route path="/add-user" exact component={AdminEditUser}/>
+                        <Route path="/add-user" exact component={AddNewUser}/>
+                        <Route path="/edit-user" exact component={AdminEditUser}/>
+                        <Route path="/add-class" exact component={AddNewClass}/>
+                        <Route path="/assign-student" exact component={AssignStudent}/>
                     </Switch>
                     <div className="footer-container">
                         <div className="footer container text-center">
