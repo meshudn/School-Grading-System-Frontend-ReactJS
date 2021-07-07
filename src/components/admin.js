@@ -210,7 +210,7 @@ class AdminPage extends React.Component {
             .then(response => {
                 if (response.status === 200) {
                     /*subject with only dependent tests can be archived*/
-                    myComponent.setState({ newSubject: true });
+                    //myComponent.setState({ newSubject: true });
                     axios.put("http://localhost:3000/api/v1/subjects/" + index.subjectId, data)
                         .then(function (response) {
                             console.log(response);
@@ -218,6 +218,7 @@ class AdminPage extends React.Component {
                                 axios.put("http://localhost:3000/api/v1/tests/archived/id?subjectId=" + index.subjectId, data)
                                     .then(function (response) {
                                         console.log(response);
+                                        myComponent.setState({ newSubject: true });
                                     })
                                     .catch(function (error) {
                                         console.log(error);
