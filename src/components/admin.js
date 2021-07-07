@@ -17,13 +17,13 @@ class AdminPage extends React.Component {
             count: 1,
             newClass: false,
             newUser: false,
+            newSubject: false,
             classes: '',
             subjects: ''
         };
-        this.newClass = false;
-        this.newUser = false;
         this.handleDeleteUser = this.handleDeleteUser.bind(this);
         this.handleDeleteClass = this.handleDeleteClass.bind(this);
+        this.handleDeleteSubjects = this.handleDeleteSubjects.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -33,13 +33,12 @@ class AdminPage extends React.Component {
             axios.get("http://localhost:3000/api/v1/users")
                 .then(response => {
                     const users = response.data;
-                    console.log(JSON.stringify(users));
+                    //console.log(JSON.stringify(users));
                     //console.log(products[1].product_id);
                     component.setState({
                         users: users
                     });
                 });
-
             console.log("update users");
         }
         if(this.state.newClass === true) {
@@ -47,13 +46,21 @@ class AdminPage extends React.Component {
             axios.get("http://localhost:3000/api/v1/classes")
                 .then(response => {
                     const classes = response.data;
-                    console.log(JSON.stringify(classes));
-                    //console.log(products[1].product_id);
                     component.setState({
                         classes: classes
                     });
                 });
             console.log("update class");
+        }if(this.state.newSubject === true) {
+            this.state.newSubject = false;
+            axios.get("http://localhost:3000/api/v1/subjects")
+                .then(response => {
+                    const subjects = response.data;
+                    component.setState({
+                        subjects: subjects
+                    });
+                });
+            console.log("update subject");
         }
     }
 
@@ -150,6 +157,36 @@ class AdminPage extends React.Component {
             });
     }
 
+    /*
+    * Delete event for /Subjects
+    * */
+    handleDeleteSubjects(e, index) {
+        e.preventDefault();
+        /*
+        * checking weather the teacher has atleast one subjects.
+        * */
+        let myComponent = this;
+        axios.get("http://localhost:3000/api/v1/tests/" + index.subjectId)
+            .then(response => {
+                if (response.status === 200) {
+                    console.log("dependent tests found so can't able to delete");
+                }
+            }).catch(function (error) {
+            console.log(error);
+            /*
+         * deleting the class instance
+         * */
+            axios.delete("http://localhost:3000/api/v1/subjects/" + index.subjectId)
+                .then(function (response) {
+                    console.log(response);
+                    myComponent.setState({ newSubject: true });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        });
+
+    }
     render() {
         const navMenu = ['Admin View', 'Log-out'];
         const navMenuLink = ['admin', ''];
@@ -259,7 +296,7 @@ class AdminPage extends React.Component {
                                 teacherId: index.teacherId,
                                 archived: index.archived
                             }} className="settings"><img src="./setting.png" width="20"/></Link>
-                            | <a href="#" key={count + 1} onClick={(e) => myComponent.handleDeleteClass(e, index)}
+                            | <a href="#" key={count + 1} onClick={(e) => myComponent.handleDeleteSubjects(e, index)}
                                  className="delete"><img src="./delete.png" width="20"/></a>
                         </td>
                     </tr>
@@ -363,7 +400,7 @@ class AdminPage extends React.Component {
                                     <div className="table-title">
                                         <div className="row">
                                             <div className="col-sm-5">
-                                                <h2>Class Management</h2>
+                                                <h2>Subjects Management</h2>
                                             </div>
                                             <div className="col-sm-7">
                                                 <a href="#" className="btn btn-secondary"><i
@@ -372,9 +409,6 @@ class AdminPage extends React.Component {
                                                 <a href="#" className="btn btn-secondary"><i
                                                     className="material-icons">&#xE147;</i>
                                                     <span><Link to="/assign-student">Archiving a subject</Link></span></a>
-                                                <a href="#" className="btn btn-secondary"><i
-                                                    className="material-icons">&#xE147;</i>
-                                                    <span><Link to="/deassign-student">Deassign Student</Link></span></a>
                                             </div>
                                         </div>
                                     </div>

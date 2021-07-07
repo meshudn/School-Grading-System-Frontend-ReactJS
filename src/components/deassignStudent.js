@@ -4,7 +4,7 @@ import '../App.css';
 import Navbar from "./navbar";
 import {Link} from "react-router-dom";
 
-class AssignStudent extends React.Component {
+class DeassignStudent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -123,13 +123,11 @@ class AssignStudent extends React.Component {
                                 <h3>Assign Student</h3>
                                 <label htmlFor="inputEmail" className="sr-only">Class Name</label>
                                 <select name="classId" required value={this.state.classId} onChange={this.handleInputChange}>
-                                    <option>Please select</option>
                                     {classList}
                                 </select>
                                 <br/>
                                 <label htmlFor="inputEmail" className="sr-only">Student ID</label>
                                 <select name="studentId" required value={this.state.studentId} onChange={this.handleInputChange}>
-                                    <option>Please select</option>
                                     {userList}
                                 </select>
 
@@ -154,6 +152,6 @@ class AssignStudent extends React.Component {
     }
 }
 
-export default AssignStudent;
+export default DeassignStudent;
 
 

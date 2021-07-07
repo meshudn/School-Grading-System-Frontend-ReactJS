@@ -12,6 +12,8 @@ import AdminEditUser from "./components/adminEditUser";
 import AddNewUser from "./components/addNewUser";
 import AddNewClass from "./components/addNewClass";
 import AssignStudent from "./components/assignStudent";
+import DeassignStudent from "./components/deassignStudent";
+import AddSubject from "./components/addSubject";
 
 
 class App extends React.Component {
@@ -29,6 +31,8 @@ class App extends React.Component {
                         <Route path="/edit-user" exact component={AdminEditUser}/>
                         <Route path="/add-class" exact component={AddNewClass}/>
                         <Route path="/assign-student" exact component={AssignStudent}/>
+                        <Route path="/deassign-student" exact component={DeassignStudent}/>
+                        <Route path="/add-subject" exact component={AddSubject}/>
                     </Switch>
                     <div className="footer-container">
                         <div className="footer container text-center">
