@@ -62,6 +62,13 @@ class AddGrade extends React.Component {
             archived: "false"
         };
 
+        for(let i=0;i< this.state.students.length;i++){
+            if(this.state.students[i].userid == data.studentId){
+                console.log("student name: "+ this.state.students[i].studentName);
+                data.studentName = this.state.students[i].studentName;
+            }
+        }
+
         //console.log(data);
         let classInstance = this;
         axios.post('http://localhost:3000/api/v1/grades/', data)
@@ -98,8 +105,7 @@ class AddGrade extends React.Component {
     render() {
         const navMenu = ['<- All Tests','Teacher View', 'Log-out'];
         const navMenuLink = ['tests','teacher', '/'];
-        const studentList = [];
-
+        let studentList = [];
         try {
             var tempStudent = this.state.students;
             var tempAdmittedStudent = this.state.admittedStudent;

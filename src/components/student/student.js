@@ -1,5 +1,5 @@
 /*
-* teacher view
+* Admin view
 * */
 import React from 'react';
 import '../../App.css';
@@ -8,22 +8,32 @@ import axios from 'axios';
 import Navbar from "../navbar";
 import {Link} from "react-router-dom";
 
-class TeacherView extends React.Component {
+class StudentView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            grades: '',
             subjects: '',
             count: 1,
-            teacherId: this.props.location.userid
+            studentId: this.props.location.userid
         };
     }
 
-
     componentDidMount() {
-        axios.get("http://localhost:3000/api/v1/subjects/search?teacherId="+this.state.teacherId)
+        axios.get("http://localhost:3000/api/v1/grades/search?studentId="+this.state.studentId)
+            .then(response => {
+                const grades = response.data;
+                //console.log(JSON.stringify(users));
+                //console.log(products[1].product_id);
+                this.setState({
+                    grades: grades
+                });
+            });
+
+        axios.get("http://localhost:3000/api/v1/subjects")
             .then(response => {
                 const subjects = response.data;
-                console.log(JSON.stringify(subjects));
+                //console.log(JSON.stringify(users));
                 //console.log(products[1].product_id);
                 this.setState({
                     subjects: subjects
@@ -33,47 +43,48 @@ class TeacherView extends React.Component {
 
 
     render() {
-        const navMenu = ['Teacher View', 'Log-out'];
-        const navMenuLink = ['teacher', ''];
+        const navMenu = ['Student View', 'Log-out'];
+        const navMenuLink = ['student', ''];
         /*
         * saving the list of users in array before rendering
         * */
-        const subjectsList = [];
+        let gradeList = [], subjectList=[];
         try {
             /*
             * Assign Subjects
             * */
-            var tempSubjects = this.state.subjects;
-            let classCount = 0;
-            tempSubjects.map(function (index) {
-                classCount++;
-                let status = "";
-                if (index.archived == "false") {
-                    status = "Active";
-                } else {
-                    status = "Inactive";
+            var tempGrades = this.state.grades;
+            let subjectList = this.state.subjects;
+            let classCount = 0, max = 0, avg=0;
+            let subjectNameList=[], gradeMax, gradeAvg;
+            for(let i=0;i< subjectList.length;i++){
+                for(let j=0; j<tempGrades.length;j++){
+                    if(subjectList[i].subjectId == tempGrades[j].subjectId){
+                       subjectNameList.push(subjectList[i].subjectName);
+                    }
                 }
-                let tempClassId = index.classId;
-                return subjectsList.push(
+            }
+
+            console.log(subjectNameList);
+            tempGrades.map(function (index) {
+                classCount++;
+                max += parseInt(index.grade);
+                return max;
+            });
+            console.log(max / classCount);
+            avg = max / classCount;
+            classCount = 0;
+            for(let j=0; j<tempGrades.length;j++){
+                classCount++;
+                gradeList.push(
                     <tr key={classCount+"d"+1}>
                         <td>{classCount}</td>
-                        <td>{index.className}</td>
-                        <td>{index.subjectName}</td>
-                        <td><span className="status text-success">&bull;</span> {status}</td>
-                        <td className="action-button">
-                            <Link to={{
-                                pathname: '/tests',
-                                subjectId: index.subjectId,
-                                classId: index.classId,
-                                subjectName: index.subjectName,
-                                teacherId: index.teacherId,
-                                teacherName: index.teacherName
-                            }} className="settings"><img src="./setting.png" width="20"/></Link>
-                        </td>
-                    </tr>
-                );
-            });
+                        <td>{subjectNameList[j]}</td>
+                        <td>{tempGrades[j].testName}</td>
+                        <td>{avg}</td>
+                    </tr>);
 
+            }
 
         } catch {
             console.log('... No data ...');
@@ -96,7 +107,7 @@ class TeacherView extends React.Component {
                                             <div className="col-sm-7">
                                                 <a href="#" className="btn btn-secondary"><i
                                                     className="material-icons">&#xE147;</i>
-                                                    <span><Link to={{pathname: "/message-teacher", userid: this.state.teacherId, path: "teacher"}}>Message</Link></span></a>
+                                                    <span><Link to={{pathname: "/message", userid: this.state.studentId, path: "student"}}>Messages</Link></span></a>
 
                                             </div>
                                         </div>
@@ -105,14 +116,13 @@ class TeacherView extends React.Component {
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Class Name</th>
                                             <th>Subject Name</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Test Name</th>
+                                            <th>Grades</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {subjectsList}
+                                        {gradeList}
                                         </tbody>
                                     </table>
                                 </div>
@@ -126,4 +136,4 @@ class TeacherView extends React.Component {
     }
 }
 
-export default TeacherView;
+export default StudentView;

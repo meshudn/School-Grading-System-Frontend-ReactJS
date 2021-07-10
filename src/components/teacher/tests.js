@@ -119,21 +119,27 @@ class Tests extends React.Component {
                                 pathname: '/results',
                                 testId: index.testId,
                                 subjectId: index.subjectId,
-                                archived: index.archived
+                                classId: myComponent.state.classId,
+                                subjectName: myComponent.state.subjectName,
+                                teacherId: myComponent.state.teacherId,
+                                teacherName: myComponent.state.teacherName
                             }} className="settings">Results</Link>
                         </td>
                         <td className="action-button">
                             <Link to={{
-                                pathname: '/grades',
+                                pathname: '/edit-test',
                                 testId: index.testId,
+                                testName: index.testName,
                                 subjectId: index.subjectId,
-                                archived: index.archived
+                                classId: myComponent.state.classId,
+                                archived: index.archived,
+                                subjectName: myComponent.state.subjectName,
+                                teacherId: myComponent.state.teacherId,
+                                teacherName: myComponent.state.teacherName
                             }} className="settings"><img src="./setting.png" width="20"/></Link>
 
                             | <a href="#" key={classCount + 1} onClick={(e) => myComponent.handleDeleteTests(e, index)}
                                  className="delete"><img src="./delete.png" width="20"/></a>
-
-
                         </td>
                     </tr>
                 );

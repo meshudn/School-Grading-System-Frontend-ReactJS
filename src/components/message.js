@@ -1,79 +1,67 @@
 /*
-* teacher view
+* Admin view
 * */
 import React from 'react';
-import '../../App.css';
-import '../admin-stylesheets.css'
+import '../App.css';
+import './admin-stylesheets.css'
 import axios from 'axios';
-import Navbar from "../navbar";
+import Navbar from "./navbar";
 import {Link} from "react-router-dom";
 
-class TeacherView extends React.Component {
+class Message extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            subjects: '',
-            count: 1,
-            teacherId: this.props.location.userid
+            messages: '',
+            senderId: this.props.location.userid,
+            receiverId:'',
+            text: '',
+            path: this.props.location.path
         };
     }
 
-
     componentDidMount() {
-        axios.get("http://localhost:3000/api/v1/subjects/search?teacherId="+this.state.teacherId)
+        axios.get("http://localhost:3000/api/v1/messages/search?senderId="+this.state.senderId+'&receiverId='+this.state.senderId)
             .then(response => {
-                const subjects = response.data;
-                console.log(JSON.stringify(subjects));
+                const messages = response.data;
+                //console.log(JSON.stringify(users));
                 //console.log(products[1].product_id);
                 this.setState({
-                    subjects: subjects
+                    messages: messages
                 });
             });
     }
 
 
     render() {
-        const navMenu = ['Teacher View', 'Log-out'];
-        const navMenuLink = ['teacher', ''];
+        const navMenu = ['Student View', 'Log-out'];
+        const navMenuLink = ['student', ''];
         /*
         * saving the list of users in array before rendering
         * */
-        const subjectsList = [];
+        let messageList=[];
         try {
-            /*
-            * Assign Subjects
-            * */
-            var tempSubjects = this.state.subjects;
-            let classCount = 0;
-            tempSubjects.map(function (index) {
+            let msgList = this.state.messages;
+            let classCount = 0, max = 0, avg=0;
+            let classInstance = this;
+            for(let j=0; j<msgList.length;j++){
                 classCount++;
-                let status = "";
-                if (index.archived == "false") {
-                    status = "Active";
-                } else {
-                    status = "Inactive";
-                }
-                let tempClassId = index.classId;
-                return subjectsList.push(
+                messageList.push(
                     <tr key={classCount+"d"+1}>
                         <td>{classCount}</td>
-                        <td>{index.className}</td>
-                        <td>{index.subjectName}</td>
-                        <td><span className="status text-success">&bull;</span> {status}</td>
-                        <td className="action-button">
+                        <td>{msgList[j].senderId}</td>
+                        <td>{msgList[j].receiverId}</td>
+                        <td>{msgList[j].text}</td>
+                        <td>
                             <Link to={{
-                                pathname: '/tests',
-                                subjectId: index.subjectId,
-                                classId: index.classId,
-                                subjectName: index.subjectName,
-                                teacherId: index.teacherId,
-                                teacherName: index.teacherName
-                            }} className="settings"><img src="./setting.png" width="20"/></Link>
+                                pathname: '/read-message',
+                                messageId: msgList[j].messageId,
+                                userid: classInstance.state.senderId
+                            }} className="settings">Read!</Link>
                         </td>
-                    </tr>
-                );
-            });
+                    </tr>);
 
+            }
 
         } catch {
             console.log('... No data ...');
@@ -91,13 +79,12 @@ class TeacherView extends React.Component {
                                     <div className="table-title">
                                         <div className="row">
                                             <div className="col-sm-5">
-                                                <h2>Assign Subjects</h2>
+                                                <h2>All Messages</h2>
                                             </div>
                                             <div className="col-sm-7">
                                                 <a href="#" className="btn btn-secondary"><i
                                                     className="material-icons">&#xE147;</i>
-                                                    <span><Link to={{pathname: "/message-teacher", userid: this.state.teacherId, path: "teacher"}}>Message</Link></span></a>
-
+                                                    <span><Link to={{pathname: "/send-message", userid: this.state.senderId, path: this.state.path}}>Send Message</Link></span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -105,14 +92,14 @@ class TeacherView extends React.Component {
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Class Name</th>
-                                            <th>Subject Name</th>
-                                            <th>Status</th>
+                                            <th>Sender</th>
+                                            <th>Receiver</th>
+                                            <th>Seen</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {subjectsList}
+                                        {messageList}
                                         </tbody>
                                     </table>
                                 </div>
@@ -126,4 +113,4 @@ class TeacherView extends React.Component {
     }
 }
 
-export default TeacherView;
+export default Message;

@@ -40,13 +40,17 @@ class LoginPage extends React.Component {
         };
         axios.post('http://localhost:3000/api/v1/users/login', data)
             .then(response => {
+                const users = response.data;
+                console.log(JSON.stringify(users));
+                //console.log(products[1].product_id);
+
                 if (response.status === 200) {
-                    if (response.data === "admin") {
-                        this.props.history.push('/admin');
-                    } else if (response.data === "teacher") {
-                        this.props.history.push('/teacher');
-                    } else if (response.data === "student") {
-                        this.props.history.push('/student');
+                    if (users.role === "admin") {
+                        this.props.history.push({pathname: '/admin', userid: users.userid});
+                    } else if (users.role === "teacher") {
+                        this.props.history.push({pathname: '/teacher', userid: users.userid});
+                    } else if (users.role === "student") {
+                        this.props.history.push({pathname: '/student', userid: users.userid});
                     }
                 }
             }).catch(error => {

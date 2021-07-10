@@ -19,6 +19,13 @@ import TeacherView from "./components/teacher/teacher";
 import Tests from "./components/teacher/tests";
 import AddTest from "./components/teacher/addTest";
 import AddGrade from "./components/teacher/addGrade";
+import Results from "./components/teacher/results";
+import EditTest from "./components/teacher/editTests";
+import StudentView from "./components/student/student";
+import Message from "./components/message";
+import SendMessage from "./components/sendMessage";
+import MessagesTeacher from "./components/teacher/messagesTeacher";
+import SendMessageTeacher from "./components/teacher/sendMessageTeacher";
 
 
 class App extends React.Component {
@@ -33,7 +40,6 @@ class App extends React.Component {
                         <Route path="/" exact component={LoginPage}/>
                         <Route path="/admin" exact component={AdminPage}/>
                         <Route path="/teacher" exact component={TeacherView}/>
-                        <Route path="/student" exact component={AdminPage}/>
                         <Route path="/add-user" exact component={AddNewUser}/>
                         <Route path="/edit-user" exact component={AdminEditUser}/>
                         <Route path="/add-class" exact component={AddNewClass}/>
@@ -46,6 +52,18 @@ class App extends React.Component {
                         <Route path="/tests" exact component={Tests}/>
                         <Route path="/add-test" exact component={AddTest}/>
                         <Route path="/add-grade" exact component={AddGrade}/>
+                        <Route path="/results" exact component={Results}/>
+                        <Route path="/edit-test" exact component={EditTest}/>
+
+                        {/*student view */}
+                        <Route path="/student" exact component={StudentView}/>
+
+                        <Route path="/message" exact component={Message}/>
+                        <Route path="/send-message" exact component={SendMessage}/>
+
+                        <Route path="/message-teacher" exact component={MessagesTeacher}/>
+                        <Route path="/send-message-teacher" exact component={SendMessageTeacher}/>
+
                     </Switch>
                     <div className="footer-container">
                         <div className="footer container text-center">
