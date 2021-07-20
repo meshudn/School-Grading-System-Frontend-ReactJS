@@ -19,7 +19,6 @@ class Message extends React.Component {
             path: this.props.location.path
         };
     }
-
     componentDidMount() {
         axios.get("http://localhost:3000/api/v1/messages/search?senderId="+this.state.senderId+'&receiverId='+this.state.senderId)
             .then(response => {

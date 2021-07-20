@@ -34,7 +34,8 @@ class AddGrade extends React.Component {
                     students: students
                 });
             });
-        axios.get("http://localhost:3000/api/v1/admission/"+this.state.classId)
+        console.log("class id: "+ this.state.classId);
+        axios.get("http://localhost:3000/api/v1/admission/search?classId="+this.state.classId)
             .then(response => {
                 const admittedStudent = response.data;
                 //console.log(JSON.stringify(admittedStudent));
